@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{488EC799-94FF-4CDC-B7B2-7AC4A0A7883D}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>DateByckets</RootNamespace>
-    <AssemblyName>DateByckets</AssemblyName>
+    <RootNamespace>DateBuckets</RootNamespace>
+    <AssemblyName>DateBuckets</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DateBuckets.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
