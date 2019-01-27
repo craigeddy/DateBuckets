@@ -10,7 +10,8 @@ namespace DateBuckets
             Days,
             Weeks,
             Months,
-            Quarters
+            Quarters,
+            Years
         }
 
         /// <summary>
@@ -29,7 +30,9 @@ namespace DateBuckets
         {
             if (end < start.AddMonths(1)) return DateRange.Days;
             if (end < start.AddMonths(6)) return DateRange.Weeks;
-            return end < start.AddMonths(24) ? DateRange.Months : DateRange.Quarters;
+            if (end < start.AddMonths(24)) return DateRange.Months;
+            if (end < start.AddMonths(60)) return DateRange.Quarters;
+            return DateRange.Years;
         }
 
         public static int GetBucketCount(DateTime start, DateTime end)
@@ -61,8 +64,7 @@ namespace DateBuckets
                 return new DateDiff(start,end).Quarters + 1;
             }
 
-            return 0;
-
+            return end.Year - start.Year + 1;
         }
 
         public static ICalendarTimeRange GetBuckets(DateTime start, DateTime end)
@@ -83,6 +85,9 @@ namespace DateBuckets
 
                 case DateRange.Quarters:
                     return new Quarters(start, new Quarter(start).YearQuarter, bucketCount);
+
+                case DateRange.Years:
+                    return new Years(start, bucketCount);
 
                 default:
                     return null;
