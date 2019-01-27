@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using DateBuckets;
+using Itenso.TimePeriod;
 using NUnit.Framework;
 
 /*
@@ -32,6 +34,11 @@ namespace UnitTests
         [TestCase("1/3/2017", "1/30/2017", ExpectedResult = 28)]
         [TestCase("1/3/2019", "2/12/2019", ExpectedResult = 7)]
         [TestCase("12/31/2018", "2/12/2019", ExpectedResult = 7)]
+        [TestCase("1/3/2017", "1/31/2018", ExpectedResult = 13)]
+        [TestCase("1/31/2017", "1/3/2018", ExpectedResult = 13)]
+        [TestCase("1/31/2017", "1/3/2019", ExpectedResult = 25)]
+        [TestCase("1/31/2017", "4/3/2019", ExpectedResult = 10)]
+        [TestCase("1/31/2017", "3/3/2019", ExpectedResult = 9)]
 
         public int DateBucket_GetBucketCount_ReturnsCorrect_Quantity(DateTime start, DateTime end)
         {

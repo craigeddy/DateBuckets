@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using Itenso.TimePeriod;
 
 namespace DateBuckets
 {
@@ -39,12 +40,30 @@ namespace DateBuckets
                 return (end - start).Days + 1;
             }
 
-            var cal = new GregorianCalendar(GregorianCalendarTypes.USEnglish);
-            var startWeek = cal.GetWeekOfYear(start, CalendarWeekRule.FirstDay, DayOfWeek.Sunday);
-            var endWeek = cal.GetWeekOfYear(end, CalendarWeekRule.FirstDay, DayOfWeek.Sunday);
+            if (GetRange(start, end) == DateRange.Weeks)
+            {
+                return new DateDiff(start, end).Weeks + 1;
+            }
 
-            if (startWeek > endWeek) startWeek = 1;
-            return (endWeek - startWeek) + 1;
+            if (GetRange(start, end) == DateRange.Months)
+            {
+                var startMonth = start.Month;
+                var endMonth = end.Month;
+                if (start.Year == end.Year)
+                {
+                    return endMonth - startMonth + 1;
+                }
+
+                return 13 - startMonth + (end.Year - start.Year - 1) * 12 + endMonth;
+            }
+
+            if( GetRange(start,end) == DateRange.Quarters)
+            {
+                return new DateDiff(start,end).Quarters + 1;
+            }
+
+            return 0;
+
         }
     }
 }
