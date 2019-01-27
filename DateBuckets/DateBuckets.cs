@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace DateBuckets
 {
@@ -29,6 +30,21 @@ namespace DateBuckets
             if (end < start.AddMonths(1)) return DateRange.Days;
             if (end < start.AddMonths(6)) return DateRange.Weeks;
             return end < start.AddMonths(24) ? DateRange.Months : DateRange.Quarters;
+        }
+
+        public static int GetBucketCount(DateTime start, DateTime end)
+        {
+            if (GetRange(start, end) == DateRange.Days)
+            {
+                return (end - start).Days + 1;
+            }
+
+            var cal = new GregorianCalendar(GregorianCalendarTypes.USEnglish);
+            var startWeek = cal.GetWeekOfYear(start, CalendarWeekRule.FirstDay, DayOfWeek.Sunday);
+            var endWeek = cal.GetWeekOfYear(end, CalendarWeekRule.FirstDay, DayOfWeek.Sunday);
+
+            if (startWeek > endWeek) startWeek = 1;
+            return (endWeek - startWeek) + 1;
         }
     }
 }
