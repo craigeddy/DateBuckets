@@ -65,5 +65,29 @@ namespace DateBuckets
             return 0;
 
         }
+
+        public static ICalendarTimeRange GetBuckets(DateTime start, DateTime end)
+        {
+            var range = GetRange(start, end);
+            var bucketCount = GetBucketCount(start,end);
+
+            switch (range)
+            {
+                case DateRange.Days:
+                    return new Days(start, bucketCount);
+
+                case DateRange.Weeks:
+                    return new Weeks(start, bucketCount);
+
+                case DateRange.Months:
+                    return new Months(start, (YearMonth)start.Month, bucketCount);
+
+                case DateRange.Quarters:
+                    return new Quarters(start, new Quarter(start).YearQuarter, bucketCount);
+
+                default:
+                    return null;
+            }
+        }
     }
 }
